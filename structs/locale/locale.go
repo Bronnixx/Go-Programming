@@ -37,11 +37,10 @@ func main() {
 		os.Exit(1)
 	}
 	passedArg := struct {
-		lang    string
-		country string
+		locale
 	}{
-		os.Args[1],
-		os.Args[2],
+		locale.lang = os.Args[1],
+		locale.country = os.Args[2],
 	}
 	for i := 0; i < len(validate); i++ {
 		if passedArg == validate[i] {
