@@ -17,13 +17,13 @@ type Developer struct {
 type WeekDay int
 
 const (
-	monday = iota
-	tuesday
-	wednesday
-	thursday
-	friday
-	saturday
-	sunday
+	Monday = iota
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+	Sunday
 )
 
 func main() {
