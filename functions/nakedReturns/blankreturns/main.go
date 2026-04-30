@@ -9,10 +9,10 @@ func message() (message string, err error) {
 	message = "james"
 	if message == "hi" {
 		err = fmt.Errorf("say bye\n") //err is being shadowed during return calling
-		return "", err                 //only accesible within the curly brackets
+		return "", err                //only accesible within the curly brackets
 
 	}
-	err = errors.New("another string was passed")
+	err = errors.New("another string was passed\n")
 	return "", err
 
 }
@@ -20,8 +20,4 @@ func main() {
 	_, m := message()
 
 	fmt.Print(m)
-}
-
-	fmt.Print(m)
-	fmt.Println(f)
 }
