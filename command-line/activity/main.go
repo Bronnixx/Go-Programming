@@ -4,32 +4,38 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"syscall"
 	"time"
+
+	u "golang.org/x/sys/unix"
 )
 
 func main() {
-	timeLimit := 5 * time.Second
-	fmt.Println("Press Enter to start the stopwatch...")
-	_, err := fmt.Scanln() //wait for user to press Enter
-	if err != nil {
-		fmt.Println("Error reading from stdin:", err)
-		return
-
-	}
-	fmt.Println("Stopwatch started.Waiting for", timeLimit)
+	startTime := time.Now() 
+	killSignal, pid := psKiller()
+	taskTimer(startTime, killSignal,pid)
+	
+	
+}
+func psKiller() (syscall.Signal ,int){// returns a termination signal and pid
+	fmt.Println("Initiating processKiller() on process: \t", u.Getpid())
+	timeLimit := 5 *time.Second
 	time.Sleep(timeLimit)
-	fmt.Println("Time's up!!! Executing the other command.")
-	cmd := exec.Command("watch", "-n", "1", "pstree")
+    signal := syscall.SIGTERM
+    return  signal, u.Getpid()
+	
+}
+func taskTimer(t time.Time, s syscall.Signal, pid int) {
+	fmt.Println("\nStarting process",pid,"at Start Time", t)
+	f := func(){
+		fmt.Println("executing a remote command")
+	cmd := exec.Command("watch","-n", "1", "lsof")//will never show execution on the terminal...there's termination signal
+    timelimit := 5* time.Second
+   time.Sleep(timelimit)	
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	
-	
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("Error executing command:", err)
 	}
-}
-func psKiller(t time.Duration){
-	time.Sleep(t)
-	cmd := exec.Cmd("")
+	f()
+	
 }
