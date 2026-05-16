@@ -29,7 +29,7 @@ func taskTimer() (int, syscall.Signal){
 	
 	signal := syscall.SIGTERM
 
-		cmd := exec.Command("watch","-n", "1", "pstree")
+		cmd := exec.Command(os.Args[1],os.Args[2],os.Args[3],os.Args[4])
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		if err := cmd.Start(); err != nil{
